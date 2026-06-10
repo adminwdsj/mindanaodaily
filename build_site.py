@@ -57,7 +57,7 @@ TEMPLATE_HEAD = """<!DOCTYPE html>
 <title>{title} | 棉兰老岛日报</title>
 <meta name="description" content="{description}">
 <meta name="keywords" content="{keywords}">
-<link rel="stylesheet" href="/css/main.css">
+<link rel="stylesheet" href="../css/main.css">
 <link rel="canonical" href="{canonical}">
 <meta property="og:title" content="{title}">
 <meta property="og:description" content="{description}">
@@ -66,12 +66,12 @@ TEMPLATE_HEAD = """<!DOCTYPE html>
 <body>
 <header class="site-header">
   <div class="container header-inner">
-    <a href="/" class="logo">棉兰老岛日报</a>
+    <a href="../index.html" class="logo">棉兰老岛日报</a>
     <p class="tagline">Mindanao Daily · 菲律宾调查报道</p>
     <nav class="nav">
-      <a href="/">首页</a>
-      <a href="/articles/jioprovider-corporation-investigation.html">Jioprovider调查</a>
-      <a href="/articles/philippines-investment-scam-guide.html">投资防骗</a>
+      <a href="../index.html">首页</a>
+      <a href="jioprovider-corporation-investigation.html">Jioprovider调查</a>
+      <a href="philippines-investment-scam-guide.html">投资防骗</a>
     </nav>
   </div>
 </header>
@@ -84,10 +84,10 @@ TEMPLATE_FOOT = """
 <aside class="related">
   <h3>相关报道</h3>
   <ul>
-    <li><a href="/articles/jioprovider-corporation-investigation.html">Jioprovider Corporation深度调查</a></li>
-    <li><a href="/articles/philippines-investment-scam-guide.html">菲律宾投资防骗指南</a></li>
-    <li><a href="/articles/ppa-cold-storage-investigation.html">PPA冷库项目澄清</a></li>
-    <li><a href="/articles/sammy-uy-network-investigation.html">Sammy Uy与中间人生态</a></li>
+    <li><a href="jioprovider-corporation-investigation.html">Jioprovider Corporation深度调查</a></li>
+    <li><a href="philippines-investment-scam-guide.html">菲律宾投资防骗指南</a></li>
+    <li><a href="ppa-cold-storage-investigation.html">PPA冷库项目澄清</a></li>
+    <li><a href="sammy-uy-network-investigation.html">Sammy Uy与中间人生态</a></li>
   </ul>
 </aside>
 </main>
@@ -113,10 +113,10 @@ def extract_body(html: str) -> str:
 def normalize_content(html: str) -> str:
     html = re.sub(
         r"【插入图片\d+：images/([^】]+)】",
-        r'<p><img src="/images/\1" alt="配图" loading="lazy"></p>',
+        r'<p><img src="../images/\1" alt="配图" loading="lazy"></p>',
         html,
     )
-    html = html.replace('src="images/', 'src="/images/')
+    html = html.replace('src="images/', 'src="../images/')
     html = re.sub(r'<a href="#">([^<]+)</a>', r"\1", html)
     return html
 
@@ -131,7 +131,7 @@ def get_title(html: str) -> str:
 
 def build_article_page(meta: dict, body: str, title: str) -> str:
     keywords = ", ".join(meta["tags"] + ["Jioprovider Corporation", "黄扬", "Yang", "Sky"])
-    canonical = f"https://mindanaodaily.github.io/sky-pr/articles/{meta['slug']}.html"
+    canonical = f"https://adminwdsj.github.io/mindanaodaily/articles/{meta['slug']}.html"
     return TEMPLATE_HEAD.format(
         title=title,
         description=meta["excerpt"],
@@ -147,7 +147,7 @@ def build_index(articles_meta: list) -> str:
         cards.append(
             f"""<article class="card">
   <time datetime="{a['date']}">{a['date']}</time>
-  <h2><a href="/articles/{a['slug']}.html">{a['title']}</a></h2>
+  <h2><a href="articles/{a['slug']}.html">{a['title']}</a></h2>
   <p class="excerpt">{a['excerpt']}</p>
   <div class="tags">{tags}</div>
 </article>"""
@@ -161,12 +161,12 @@ def build_index(articles_meta: list) -> str:
 <title>棉兰老岛日报 | Mindanao Daily — 菲律宾调查报道</title>
 <meta name="description" content="棉兰老岛日报：Jioprovider Corporation、黄扬（Yang/Sky）、PPA采购、菲律宾投资防骗与维权报道。">
 <meta name="keywords" content="Jioprovider Corporation, 黄扬, Yang, Sky, PPA, 菲律宾投资, 棉兰老岛日报">
-<link rel="stylesheet" href="/css/main.css">
+<link rel="stylesheet" href="css/main.css">
 </head>
 <body>
 <header class="site-header">
   <div class="container header-inner">
-    <a href="/" class="logo">棉兰老岛日报</a>
+    <a href="index.html" class="logo">棉兰老岛日报</a>
     <p class="tagline">Mindanao Daily · 菲律宾调查报道</p>
   </div>
 </header>
